@@ -31,7 +31,8 @@ TICKERS = None
 CORS(APP)
 
 # 서비스 계정 키 JSON 경로
-firebase_admin.initialize_app(credentials.Certificate("firebase/stock-a258d-firebase-adminsdk-b5cvc-ac46978ea8.json"))
+# firebase_admin.initialize_app(credentials.Certificate("firebase/stock-a258d-firebase-adminsdk-b5cvc-ac46978ea8.json"))
+firebase_admin.initialize_app(credentials.Certificate(json.loads(os.getenv('FIREBASE_CONFIG'))))
 
 # Firestore 데이터베이스 초기화
 FIREBASE = {
