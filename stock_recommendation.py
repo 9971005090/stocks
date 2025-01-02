@@ -147,15 +147,16 @@ def IS_DELETE_FOR_DAUM(ticker, name):
 def index():
     # GET_TOTAL()
 #     GET_THINKPOOL_SIGNAL_TODAY_BUY()
-    GET_THINKPOOL_SIGNAL_TODAY_JSON()
-    DELETE_TICKERS = []
-    for TICKER in TICKERS:
-        if IS_DELETE_FOR_DAUM(TICKER['stockCode'].strip(), TICKER['stockName']) is True:
-            DELETE_TICKERS.append(TICKER)
-    for DELETE_TICKER in DELETE_TICKERS:
-        TICKERS.remove(DELETE_TICKER)
-    print(TICKERS)
-    return jsonify(TICKERS)
+#     GET_THINKPOOL_SIGNAL_TODAY_JSON()
+#     DELETE_TICKERS = []
+#     for TICKER in TICKERS:
+#         if IS_DELETE_FOR_DAUM(TICKER['stockCode'].strip(), TICKER['stockName']) is True:
+#             DELETE_TICKERS.append(TICKER)
+#     for DELETE_TICKER in DELETE_TICKERS:
+#         TICKERS.remove(DELETE_TICKER)
+#     print(TICKERS)
+#     return jsonify(TICKERS)
+    return "REST API is ready"
 
 @APP.route('/<item>', methods=['GET'])
 def detail(item):
