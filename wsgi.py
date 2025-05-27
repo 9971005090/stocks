@@ -1,5 +1,5 @@
 # wsgi.py
-from stock_recommendation import APP  # stock_recommendation.py에서 정의한 Flask 앱을 import
+from app import APP
 
 if __name__ == "__main__":
-    APP.run()
+    APP.run(debug=True, host='0.0.0.0', port=22222)

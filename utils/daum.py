@@ -109,7 +109,7 @@ def _IS_DELETE_FOR_DAUM_DETAIL(ticker):
    "sectorCode":"None",
    "sectorName":"None",
    "sectorChangeRate":0.0,
-   "sectorPer":102.11701,
+   "sectorPer":102.11701,                                           #해당 업종의 평균 per
    "wicsSectorCode":"G253010",
    "wicsSectorName":"호텔,레스토랑,레저",
    "wicsSectorChangeRate":-0.0026795253,
@@ -121,7 +121,7 @@ def _IS_DELETE_FOR_DAUM_DETAIL(ticker):
    "eps":725.0,
    "bps":16278.0,
    "dps":100.0,
-   "per":13.23,
+   "per":13.23,                                                     #해당 회상의 per
    "pbr":0.59,
    "companySummary":"동사는 1972년 4월 27일 설립되었으며, 2002년 11월 5일자로 코스닥시장에 상장되어 코스닥시장에서 매매거래가 개시됨. 동사는 4개의 외국인전용 카지노 사업장을 운영하고 있으며, 연결기준 카지노 부문에는 서울, 부산, 제주 카지노가 포함됨. 복합리조트 부문에서는 인천 영종도의 '파라다이스시티' 리조트가 속해 있으며, 이 안에는 카지노, 호텔, 기타 엔터테인먼트 시설이 있음.",
    "debtRatio":0.96748,
