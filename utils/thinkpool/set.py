@@ -21,9 +21,11 @@ def _SET_STOCK_PARSING(_TS, date):
             'name': _T['daum_stock_info']['name'],
             'code': _T['daum_stock_info']['symbolCode'].replace('A', ''),
             'market': _T['daum_stock_info']['market'],
+            'per': _T['daum_stock_info']['per'],
+            'pbr': _T['daum_stock_info']['pbr'],
+            'debt_ratio': _T['daum_stock_info']['debtRatio'],
             'recommendation_date': datetime.strptime(date, "%Y%m%d"),
             'recommendation_price': _T['daum_stock_info']['recommendation_price'],
-
             'rank': _T['daum_stock_info']['marketCapRank'],
             'high_52_week': {
                 'price': _T['daum_stock_info']['high52wPrice'],
@@ -39,6 +41,8 @@ def _SET_STOCK_PARSING(_TS, date):
             'low_50_day': {
                 'price': _T['daum_stock_info']['low50dPrice'],
             },
+            'foreign_buying_trend': _T['daum_stock_info']['foreign_buying_trend'],
+            'ins_buying_trend': _T['daum_stock_info']['ins_buying_trend'],
         })
     return TICKERS
 
@@ -48,13 +52,15 @@ def _SAVE_SIGNAL_TODAY_BUY_TO_FIREBASE(date, root):
     _TS = GET.RUN_READ_SIGNAL_TODAY_BUY_JSON(date, root)
     delete = False
     for _T in _TS:
-        delete, _T['daum_stock_info'] = DAUM_GET.RUN_USE_CHECK_FOR_DAUM(_T['stockCode'].strip(), _T['stockName'], date)
+        delete, _T['daum_stock_info'] = DAUM_GET.RUN_USE_CHECK_FOR_DELETE(_T['stockCode'].strip(), _T['stockName'], date)
         if delete is True:
             DELETE_TICKERS.append(_T)
     for DELETE_TICKER in DELETE_TICKERS:
         _TS.remove(DELETE_TICKER)
     stocks = _SET_STOCK_PARSING(_TS, date)
-
+    for stock in stocks:
+        print()
+        print(stock)
     for stock in stocks:
         _r = FIREBASE.INFO['DB_OBJECT'].collection(FIREBASE.INFO['DB_COLLECTION_NAME']).where(filter=FIREBASE.FieldFilter('code', '==', stock['code'])).stream()
         if FIREBASE.DOCUMENT_EXISTS(_r) is False:
@@ -73,6 +79,11 @@ def _SAVE_SIGNAL_TODAY_BUY_TO_FIREBASE(date, root):
                 'low_50_day_price': stock['low_50_day']['price'],
                 'buy_date': None,
                 'average_price': None,
+                'per': stock['per'],
+                'pbr': stock['pbr'],
+                'debt_ratio': stock['debt_ratio'] * 100,
+                'foreign_buying_trend': stock['foreign_buying_trend'],
+                'ins_buying_trend': stock['ins_buying_trend'],
             })
     return True
 
