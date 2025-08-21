@@ -78,7 +78,7 @@ def RUN():
 #             second=0,
 #             minute='1-59',
             hour=16,       # 오후 4시
-            minute=5,      # 0분
+            minute=30,      # 0분
             second=0,      # 0초
             timezone=timezone('Asia/Seoul'),  # 한국 시간대 지정
             id='stocks_send_email_save_firebase_task',
