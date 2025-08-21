@@ -6,7 +6,15 @@ from utils.thinkpool import constants as CONST
 from utils import file as FILE
 from datetime import datetime, timedelta
 
-__all__ = ['RUN_CREATE_SIGNAL_TODAY_BUY_JSON', 'RUN_READ_SIGNAL_TODAY_BUY_JSON']
+__all__ = ['RUN_CREATE_SIGNAL_TODAY_BUY_JSON', 'RUN_READ_SIGNAL_TODAY_BUY_JSON', 'RUN_GET_SIGNAL_TODAY_BUY']
+
+
+# 라씨 매수 데이타 긁어오기
+def _GET_SIGNAL_TODAY_BUY():
+    response = requests.get(f"{CONST.API['BASE']}{CONST.API['BUY']}")
+    stocks = response.json()
+    return stocks
+
 
 # 라씨 매매 데이타 긁어와 json파일 만들기
 def _CREATE_SIGNAL_TODAY_BUY_JSON(now_date):
@@ -84,3 +92,5 @@ def RUN_READ_SIGNAL_TODAY_BUY_JSON(now_date = None, root = None):
         root = os.path.abspath(__file__)
     return _READ_SIGNAL_TODAY_BUY_JSON(now_date, root)
 
+def RUN_GET_SIGNAL_TODAY_BUY():
+    return _GET_SIGNAL_TODAY_BUY()

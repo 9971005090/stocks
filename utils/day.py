@@ -1,6 +1,12 @@
 from datetime import datetime, time
 import holidays
 
+def _GET_TEMP_HOLIDAY():
+    TEMP_HOLIDAYS = [
+        date(2025, 8, 20),  # 예시: 2025-08-20
+    ]
+    return TEMP_HOLIDAYS
+
 def _GET_HOLIDAY(nation = 'kr'):
     if (nation == 'kr'):
         return holidays.KR()

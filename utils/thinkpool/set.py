@@ -87,8 +87,19 @@ def _SAVE_SIGNAL_TODAY_BUY_TO_FIREBASE(date, root):
             })
     return True
 
+# 라씨 매수 JSON 파일에서 데이타를 긁어와, firebase에 저장
+def _SAVE_SIGNAL_TODAY_BUY_ORIGINAL_TO_FIREBASE(date):
+    with open(f"./json/stocks_{now_date}.json", "w") as fp:
+            json.dump(stocks, fp, ensure_ascii=False, indent=4)
+    return True
+
 def RUN_SAVE_SIGNAL_TODAY_BUY_TO_FIREBASE(now_date = None, root = None):
     if now_date is None:
         now_date = datetime.now().strftime("%Y%m%d")
     return _SAVE_SIGNAL_TODAY_BUY_TO_FIREBASE(now_date, root)
+
+def RUN_SAVE_SIGNAL_TODAY_BUY_ORIGINAL_TO_FIREBASE(now_date = None):
+    if now_date is None:
+        now_date = datetime.now().strftime("%Y%m%d")
+    return _SAVE_SIGNAL_TODAY_BUY_ORIGINAL_TO_FIREBASE(now_date)
 
