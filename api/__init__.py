@@ -14,7 +14,6 @@ def auto_register_modules(bp, module_path='module'):
                 mod = importlib.import_module(module_import_path)
                 if hasattr(mod, 'register'):
                     mod.register(bp)
-                    print(f'✅ {module_name} 모듈 등록 완료')
             except Exception as e:
                 print(f'❌ {module_name} 등록 실패: {e}')
 

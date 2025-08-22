@@ -61,7 +61,8 @@ def save_firebase(response):
     return True
 
 def schedule():
-    print(_IS_WEEKDAY_AND_NOT_HOLIDAY())
+    now = datetime.now()
+    print(f"✅ thinkpool_buy_add_send_email_save_firebase 스케줄러 실행 {now.strftime('%Y년 %m월 %d일  %H시 %M분 %S초')} {_IS_WEEKDAY_AND_NOT_HOLIDAY()}")
     if _IS_WEEKDAY_AND_NOT_HOLIDAY() == True:
         response = THINKPOOL_RUN_GET_SIGNAL_TODAY_BUY()
         send_email(response)
@@ -71,15 +72,24 @@ def SHUTDOWN_RUN():
     SCHEDULE_SHUTDOWN_RUN(SCHEDULER)
 
 def RUN():
-    if os.environ.get('WERKZEUG_RUN_MAIN') == 'true':  # 실제 실행 중인 프로세스에서만 실행
+    print(f'✅ thinkpool_buy_add_send_email_save_firebase 스케줄러 등록 완료')
+    is_local = os.environ.get('WERKZEUG_RUN_MAIN') == 'true'
+    is_render = os.environ.get('RENDER') is not None  # Render 환경에서 자동 설정됨
+    if is_local or is_render:
         SCHEDULER.add_job(
             func=schedule,
             trigger='cron',
 #             second=0,
 #             minute='1-59',
+<<<<<<< Updated upstream
             hour=16,       # 오후 4시
             minute=30,      # 0분
             second=0,      # 0초
+=======
+            hour=9,
+            minute=30,
+            second=0,
+>>>>>>> Stashed changes
             timezone=timezone('Asia/Seoul'),  # 한국 시간대 지정
             id='stocks_send_email_save_firebase_task',
         )
