@@ -6,6 +6,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, time
+from zoneinfo import ZoneInfo
 from schedule.shutdown import RUN as SCHEDULE_SHUTDOWN_RUN
 from utils.date import _IS_WEEKDAY_AND_NOT_HOLIDAY
 from utils.thinkpool import RUN_GET_SIGNAL_TODAY_BUY as THINKPOOL_RUN_GET_SIGNAL_TODAY_BUY
@@ -14,20 +15,23 @@ from utils import file as FILE
 from utils import firebase as FIREBASE
 
 """Schedule the task for specific time on weekdays excluding holidays."""
-SCHEDULER = BackgroundScheduler()
+SCHEDULER = BackgroundScheduler(timezone=ZoneInfo("Asia/Seoul"))
 
 FB_COLLECTION = {}
 FB_COLLECTION['STOCKS_JSON'] = "stocks_json"
 
 def send_email(response):
+    print(f"✅ send_email 함수 실행")
     EMAIL.INIT()
-    subject = f'[씽크풀] {datetime.now().strftime("%Y년 %m월 %d")} 매수 정보'
+    now = datetime.now(ZoneInfo("Asia/Seoul"))
+    subject = f'[씽크풀] {now.strftime("%Y년 %m월 %d")} 매수 정보'
     content = json.dumps(response, indent=4, ensure_ascii=False)
-    attachment = FILE.GET_JSON_ATTACHMENT(response, f'{datetime.now().strftime("thinkpool_buy_%Y%m%d")}.json')
+    attachment = FILE.GET_JSON_ATTACHMENT(response, f'{now.strftime("thinkpool_buy_%Y%m%d")}.json')
     EMAIL.SEND({"email": "9971005090@naver.com"}, subject, content, attachment)
 
 def save_firebase(response):
-    now = datetime.now()
+    print(f"✅ save_firebase 함수 실행")
+    now = datetime.now(ZoneInfo("Asia/Seoul"))
     today = datetime(now.year, now.month, now.day, 0, 0, 0).isoformat()
     FIREBASE.ADD_COLLECTION(FB_COLLECTION['STOCKS_JSON'])
     _r = FIREBASE.INFO['DB_OBJECT'].collection(FIREBASE.INFO['DB_COLLECTION'][FB_COLLECTION['STOCKS_JSON']]).where(filter=FIREBASE.FieldFilter('created_at', '==', today)).stream()
@@ -61,10 +65,11 @@ def save_firebase(response):
     return True
 
 def schedule():
-    now = datetime.now()
+    now = datetime.now(ZoneInfo("Asia/Seoul"))
     print(f"✅ thinkpool_buy_add_send_email_save_firebase 스케줄러 실행 {now.strftime('%Y년 %m월 %d일  %H시 %M분 %S초')} {_IS_WEEKDAY_AND_NOT_HOLIDAY()}")
     if _IS_WEEKDAY_AND_NOT_HOLIDAY() == True:
         response = THINKPOOL_RUN_GET_SIGNAL_TODAY_BUY()
+        print(response)
         send_email(response)
         save_firebase(response)
 
@@ -81,7 +86,7 @@ def RUN():
             trigger='cron',
 #             second=0,
 #             minute='1-59',
-            hour=9,
+            hour=10,
             minute=45,
             second=0,
             timezone=timezone('Asia/Seoul'),  # 한국 시간대 지정
