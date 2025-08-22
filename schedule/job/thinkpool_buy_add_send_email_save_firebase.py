@@ -81,15 +81,9 @@ def RUN():
             trigger='cron',
 #             second=0,
 #             minute='1-59',
-<<<<<<< Updated upstream
-            hour=16,       # 오후 4시
-            minute=30,      # 0분
-            second=0,      # 0초
-=======
             hour=9,
-            minute=30,
+            minute=45,
             second=0,
->>>>>>> Stashed changes
             timezone=timezone('Asia/Seoul'),  # 한국 시간대 지정
             id='stocks_send_email_save_firebase_task',
         )
