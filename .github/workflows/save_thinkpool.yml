@@ -1,0 +1,31 @@
+name: Save Thinkpool Buy & Send Email & Save Firebase
+
+on:
+  schedule:
+    # 매일 한국 시간 오후 4시 실행 (UTC 기준 07:00)
+    - cron: '0 7 * * *'
+  workflow_dispatch: # 수동 실행도 가능하게 함
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Thinkpool process
+        env:
+          EMAIL_CONFIG: ${{ secrets.EMAIL_CONFIG }}
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+        run: |
+          python -m process.stock.save_thinkpool_buy_send_email_save_to_firebase
