@@ -28,7 +28,8 @@ def INIT(stocks_name = 'stocks'):
 
 def ADD_COLLECTION(name):
     global INFO
-    INFO['DB_COLLECTION'][name] = name
+    if name not in INFO['DB_COLLECTION']:
+        INFO['DB_COLLECTION'][name] = name
 
 def SERIALIZE_FIRESTORE_DATA(data):
     for key, value in data.items():

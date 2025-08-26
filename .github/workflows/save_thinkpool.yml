@@ -42,3 +42,4 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: |
           python -m process.stock.save_thinkpool_buy_send_email_save_to_firebase
+          python -m process.stock.save_thinkpool_buy_original_parsing_to_firebase
