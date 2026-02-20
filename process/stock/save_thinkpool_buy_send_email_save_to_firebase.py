@@ -24,6 +24,7 @@ def send_email(response):
     content = json.dumps(response, indent=4, ensure_ascii=False)
     attachment = FILE.GET_JSON_ATTACHMENT(response, f'{now.strftime("thinkpool_buy_%Y%m%d")}.json')
     EMAIL.SEND({"email": "9971005090@naver.com"}, subject, content, attachment)
+    EMAIL.SEND({"email": "seok12ok@naver.com"}, subject, content, attachment)
 
 def save_firebase(response):
     now = datetime.now(ZoneInfo("Asia/Seoul"))
