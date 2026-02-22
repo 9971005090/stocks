@@ -21,6 +21,7 @@ def send_email(response, choice_date):
     content = json.dumps(response, indent=4, ensure_ascii=False)
     attachment = FILE.GET_JSON_ATTACHMENT(response, f'{target.strftime("thinkpool_recommand_buy_%Y%m%d")}.json')
     EMAIL.SEND({"email": "9971005090@naver.com"}, subject, content, attachment)
+    EMAIL.SEND({"email": "seok12ok@naver.com"}, subject, content, attachment)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--date', default=None, help='날짜를 YYYYMMDD 형식으로 입력')
